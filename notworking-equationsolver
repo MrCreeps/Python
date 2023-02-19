@@ -1,0 +1,38 @@
+# Broken!!!
+# Made by ChatGPT
+
+import re
+
+def solve_equation(equation, x):
+  # Split the equation into LHS and RHS by the equals sign
+  lhs, rhs = equation.split("=")
+  
+  # Replace all minus signs with pluses and negate the constants so they can be treated as additions
+  lhs = lhs.replace("-", "+").replace("=", "")
+  rhs = rhs.replace("-", "+").replace("=", "")
+  
+  # Get all the terms in the equation
+  terms = re.findall(r"[+-]?\d*[a-zA-Z]+", lhs + rhs)
+  
+  # The variable is the term that doesn't contain a number
+  variable = [term for term in terms if not term.isnumeric()][0]
+  
+  # The constants are the terms that do contain a number
+  constants = [term for term in terms if term.isnumeric()]
+  
+  # Convert the constants to integers
+  constants = [int(constant) for constant in constants]
+  
+  # Solve the equation by evaluating the LHS and RHS
+  lhs_result = eval(lhs, {variable: x})
+  rhs_result = eval(rhs, {variable: x})
+  
+  # Subtract the RHS from the LHS to find the value of the variable
+  result = lhs_result - rhs_result
+  
+  return result
+
+# Test the function
+equation = "(80 - 5) * x + 3 * (x - 4) = 100"
+result = solve_equation(equation, x=10)
+print(f"The value of x is {result}")
