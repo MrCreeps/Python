@@ -5,14 +5,27 @@
 # Pthon 3.11.2
 # By MrCreeps / Caden
 
-vers = "0.0.1"
+vers = "0.0.2"
+mainLoop = True
 
-top_level_user = "toplevel"
-default_user = "default"
-current_user = default_user
+# Temporary
+passwords = {
+    "user" : "123"
+}
+
+class wrongPassword(Exception):
+    pass
 
 print(f"NAOS.X {vers}\n\n")
-current_user = input("Username? ")
 
-while True:
-    cmd = input(f"{current_user}>> ")
+try:
+    user = input("Username? ")
+    input_password = input("Password? ")
+    if input_password != passwords[user]:
+        raise wrongPassword()
+
+    while mainLoop:
+        cmd = input(f"{user}>> ")
+
+except wrongPassword: print("Incorrect Password")
+except: exit()
