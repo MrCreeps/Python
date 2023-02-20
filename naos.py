@@ -11,7 +11,7 @@
 
 import os
 
-vers = "0.0.6"
+vers = "0.0.7"
 mainLoop = True
 
 # Temporary password storage initialization
@@ -95,10 +95,11 @@ try:
     while mainLoop:
         cmd = input(f"{user}>> ")
         if cmd == "clear": clear()
-        if cmd == "tempuser": tempuser()
-        if cmd == "logout": user = logout()
-        if cmd == "listall" and user == "admin": listall()
-        if cmd == "userpolicies" and user == "admin": userpolicies()
+        elif cmd == "tempuser": tempuser()
+        elif cmd == "logout": user = logout()
+        elif cmd == "listall" and user == "admin": listall()
+        elif cmd == "userpolicies" and user == "admin": userpolicies()
+        else: print("Invalid command or permission level")
 
 except wrongPasswordError: print("Incorrect username or password")
 except userExistsError: print("Cannot add user as user already exists")
