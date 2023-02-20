@@ -11,33 +11,40 @@
 
 import os
 
-vers = "0.0.5"
+vers = "0.0.6"
 mainLoop = True
+
+# Temporary password storage initialization
+# Better solutuin not yet implemented
+passwords = {"user" : "123"}
+
+#############################
+#####   User Policies   #####
+#############################
+
 quickLogin = True
+if quickLogin:
+    passwords[""] = ""
+
 funUsers = True
-adminEnabled = True
-
-# Temporary
-passwords = {
-    "user" : "123"
-}
-
 if funUsers:
     passwords["snakamoto"] = "btc"
     passwords["vbuterin"] = "eth"
     passwords["rulbricht"] = "dpr"
     passwords["esnowden"] = "wiki"
+
+adminEnabled = True
 if adminEnabled:
     passwords["admin"] = "123"
-if quickLogin:
-    passwords[""] = ""
 
-class wrongPassword(Exception):
+#############################
+#####   Custom Errors   #####
+#############################
+    
+class wrongPasswordError(Exception):
     pass
-class userExits(Exception):
+class userExistsError(Exception):
     pass
-
-print(f"NAOS.X {vers}\n\n")
 
 ########################
 #####   Commands   #####
@@ -47,20 +54,20 @@ def clear():
     os.system("cls")
     
 def tempuser():
-    temp_username = input("Temporary username? ")
-    temp_password = input(f"Username for {temp_username}? ")
-    if temp_username not in passwords:
-        passwords[temp_username] = temp_password
-        print(f"New temporary user with password '{temp_password}' and username '{temp_username}' created!")
+    tempUsername = input("Temporary username? ")
+    tempPassword = input(f"Username for {tempUsername}? ")
+    if tempUsername not in passwords:
+        passwords[tempUsername] = tempPassword
+        print(f"New temporary user with password '{tempPassword}' and username '{tempUsername}' created!")
     else:
-        raise userExists()
+        raise userExistsError()
         
 def logout():
     print("Successfully logged out!")
     user = input("Username? ")
-    input_password = input("Password? ")
-    if user not in passwords or input_password != passwords[user]:
-        raise wrongPassword()
+    inputPassword = input("Password? ")
+    if user not in passwords or inputPassword != passwords[user]:
+        raise wrongPasswordError()
     return user
 
 def listall():
@@ -68,7 +75,7 @@ def listall():
         print (user)
         
 def userpolicies():
-    print(f"""quickLogin = {quickLogin}
+    print(f"""quick_login = {quickLogin}
 funUsers = {funUsers}
 adminEnabled = {adminEnabled}""")
 
@@ -76,12 +83,14 @@ adminEnabled = {adminEnabled}""")
 #####   Main Loop   #####
 #########################
 
+print(f"NAOS.X {vers}\n\n")
+
 try:
     user = input("Username? ")
     
-    input_password = input("Password? ")
-    if user not in passwords or input_password != passwords[user]:
-        raise wrongPassword()
+    inputPassword = input("Password? ")
+    if user not in passwords or inputPassword != passwords[user]:
+        raise wrongPasswordError()
 
     while mainLoop:
         cmd = input(f"{user}>> ")
@@ -91,6 +100,6 @@ try:
         if cmd == "listall" and user == "admin": listall()
         if cmd == "userpolicies" and user == "admin": userpolicies()
 
-except wrongPassword: print("Incorrect username or password")
-except userExists: print("Cannot add user as user already exists")
+except wrongPasswordError: print("Incorrect username or password")
+except userExistsError: print("Cannot add user as user already exists")
 except: exit()
