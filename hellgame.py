@@ -51,7 +51,7 @@ elif doors == "5":
     exit()
 else:
     print("POV: You enter a room with blinding lights but you get used to it.")
-object = input('''
+input('''
 
 POV: You now see three objects floating on pedistools. 
 You wonder how tf they be doing that...
@@ -84,11 +84,28 @@ if movement == "s":
     print("You stay still hoping for the best and the scythe chops you in half. You died.")
     exit()
 else:
-    print
-
-
-
-
-
-
-
+    print("You quickly evade the scythe just in time!")
+print("POV: The beast is now breathing fire at you from your left! s, l, r: ")
+if movement == "s":
+    print("The fire consumes you and you burn and die instantly. ")
+    exit()
+elif movement == "l":
+    print("The fire consumes you and you burn and die instantly.")
+    exit()
+else:
+    print("You move barely dodging the buring fire. You realize that you still have your object! ")
+object1 = input("What object did you grab? WS, SP, FB: ")
+if object1 == "WS":
+    print("You use the water sword but it's no use! The beast is too powerful! You die.")
+    exit()
+elif object1 == "FB":
+    print("Your fire bombs are useless against the firey demon. You die. ")
+    exit()
+else:
+    print('''You use the suspicious paper and it turns into a Water Demon!
+    The Water Demon over powers the beast and in the beast's dying breath you hear,
+    "Theres... theres no way! There-" the beast gets cut off because the Water demon chops off the head.
+    It gets tired of its bickering. 
+    
+    
+    You beat the game and you return home to your family and your new pet!''')
